@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Jeremy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            background: #f0f0f5;
+            color: #fff;
+        }
+
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            padding: 30px 20px;
+            background: #fff;
+            color: #292044;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            margin: 10px auto 18px;
+            border-radius: 50%;
+            border: 4px solid #7856d9;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: #e4def7;
+        }
+
+        .upload-label {
+            display: inline-block;
+            background: #7856d9;
+            color: white;
+            padding: 9px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 8px;
+            font-size: 22px;
+        }
+
+        .sidebar p {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        .menu {
+            list-style: none;
+            text-align: left;
+            margin-top: 25px;
+        }
+
+        .menu li {
+            margin: 10px 0;
+        }
+
+        .menu button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #38304f;
+            text-align: left;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu button:hover,
+        .menu button.active {
+            background: #7856d9;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            padding: 50px;
+            background: linear-gradient(135deg, #30205c, #6544ad, #392469);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .welcome {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome .small-title {
+            color: #d3c2ff;
+            font-size: 16px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .welcome h1 {
+            font-size: clamp(32px, 5vw, 55px);
+            margin-bottom: 20px;
+        }
+
+        .welcome h1 span {
+            color: #d5c5ff;
+        }
+
+        .welcome p {
+            max-width: 600px;
+            color: #e4def7;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #b8a0ff;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.10);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .info-card h3 {
+            color: #d5c5ff;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            line-height: 1.8;
+            color: #f1edff;
+            overflow-wrap: anywhere;
+        }
+
+        .skill {
+            margin-bottom: 20px;
+        }
+
+        .skill p {
+            margin-bottom: 8px;
+        }
+
+        .skill-bar {
+            height: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: #d5c5ff;
+            border-radius: 10px;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #d8ccef;
+            font-size: 12px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 700px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+                padding: 22px 15px;
+            }
+
+            .profile-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .sidebar p {
+                margin-bottom: 12px;
+            }
+
+            .menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                margin-top: 15px;
+            }
+
+            .menu li {
+                margin: 0;
+            }
+
+            .menu button {
+                width: auto;
+                padding: 10px 12px;
+                text-align: center;
+                font-size: 13px;
+            }
+
+            .main-content {
+                padding: 28px 20px;
+            }
+
+            .welcome {
+                min-height: 55vh;
+            }
+
+            .section-title {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <img
+            id="profilePhoto"
+            class="profile-photo"
+            alt="Foto profil"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23e4def7'/%3E%3Ccircle cx='75' cy='55' r='28' fill='%237856d9'/%3E%3Cpath d='M25 145 Q30 90 75 90 Q120 90 125 145' fill='%237856d9'/%3E%3C/svg%3E"
+        >
+
+        <label class="upload-label" for="photoInput">
+            Ganti Foto
+        </label>
+        <input type="file" id="photoInput" accept="image/*">
+
+        <h2 style="margin-top: 20px;">Jeremy</h2>
+        <p>Mahasiswa Teknik Informatika</p>
+
+        <ul class="menu">
+            <li><button class="active" data-target="home">⌂ Home</button></li>
+            <li><button data-target="about">♙ About</button></li>
+            <li><button data-target="skills">✦ Skills</button></li>
+            <li><button data-target="education">▤ Education</button></li>
+            <li><button data-target="address">⌖ Address</button></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+
+        <section id="home" class="content-section active welcome">
+            <p class="small-title">WELCOME TO MY WEBSITE</p>
+            <h1>Halo, saya <span>Jeremy!</span></h1>
+            <p>
+                Selamat datang di website profil pribadi saya.
+                Saya adalah mahasiswa Teknik Informatika yang tertarik
+                mempelajari teknologi, pemrograman, dan pengembangan web.
+            </p>
+        </section>
+
+        <section id="about" class="content-section">
+            <h1 class="section-title">About Me</h1>
+
+            <div class="info-card">
+                <h3>Perkenalan</h3>
+                <p>
+                    Nama saya Jeremy Hot Tua Simarmata.
+                    Saya merupakan mahasiswa Teknik Informatika yang
+                    sedang mempelajari dunia teknologi dan pemrograman.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>Tujuan</h3>
+                <p>
+                    Saya ingin mengembangkan kemampuan dalam membuat
+                    website dan aplikasi yang bermanfaat serta mudah digunakan.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <h1 class="section-title">My Skills</h1>
+
+            <div class="info-card">
+                <div class="skill">
+                    <p>HTML</p>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <p>CSS</p>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <p>Python</p>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <p>Java</p>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 40%;"></div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <section id="education" class="content-section">
+            <h1 class="section-title">Education</h1>
+
+            <div class="info-card">
+                <h3>Perguruan Tinggi</h3>
+                <p>Universitas: Universitas Medan Area </p>
+                <p>Program Studi: Teknik Informatika</p>
+                <p>Status: Mahasiswa</p>
+            </div>
+
+            <div class="info-card">
+                <h3>Bidang yang Dipelajari</h3>
+                <p>
+                    Pemrograman, basis data, rekayasa perangkat lunak,
+                    algoritma, dan pengembangan aplikasi berbasis web.
+                </p>
+            </div>
+        </section>
+
+        <section id="address" class="content-section">
+            <h1 class="section-title">Address</h1>
+
+            <div class="info-card">
+                <h3>Informasi Domisili</h3>
+                <p>Kota: Medan</p>
+                <p>Provinsi: Sumatera Utara</p>
+                <p>Negara: Indonesia</p>
+            </div>
+        </section>
+
+        <footer>
+            © 2026 Jeremy | Personal Profile Website
+        </footer>
+
+    </main>
+
+    <script>
+        const menuButtons = document.querySelectorAll(".menu button");
+        const sections = document.querySelectorAll(".content-section");
+
+        menuButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                const target = button.dataset.target;
+
+                menuButtons.forEach(function(item) {
+                    item.classList.remove("active");
+                });
+
+                sections.forEach(function(section) {
+                    section.classList.remove("active");
+                });
+
+                button.classList.add("active");
+                document.getElementById(target).classList.add("active");
+            });
+        });
+
+        const photoInput = document.getElementById("photoInput");
+        const profilePhoto = document.getElementById("profilePhoto");
+
+        photoInput.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    profilePhoto.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+</body>
+</html>
